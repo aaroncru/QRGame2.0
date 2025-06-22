@@ -323,6 +323,28 @@
   transition: width 0.5s ease-in-out;
   border-radius: 20px;
 }
+    .timer-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.timer-buttons button {
+  background-color: #f9d923;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 10px;
+  color: #000;
+  font-family: 'Orbitron', sans-serif;
+  transition: background 0.3s;
+}
+
+.timer-buttons button:hover {
+  background-color: #ffcd38;
+}
+
   </style>
 </head>
 
@@ -375,18 +397,20 @@
   Instagram
 </button>
   
-  <div id="startScreen" class="start-screen">
+ <div id="startScreen" class="start-screen">
+  <div id="startTimerOptions">
+    <p style="color: #f9d923; font-family: 'Orbitron', sans-serif; margin-bottom: 0.5rem;">SELECT TIME</p>
+    <div class="timer-buttons">
+      <button onclick="setTime(120)">120 sec</button>
+      <button onclick="setTime(90)">90 sec</button>
+      <button onclick="setTime(60)">60 sec</button>
+    </div>
+  </div>
+  
   <button id="startButton" onclick="startGame()">PLAY</button>
-    <p style="
-    max-width: 80%;
-    margin-top: 1.5rem;
-    color: #f9d923;
-    font-family: 'Bitter', serif;
-    text-align: center;
-    font-size: 1.1rem;
-  ">
-    <strong>INSTRUCTIONS:</strong><br>
-    The moment you decide to play, a 60-second timer will start. You'll have to answer all the puzzles correctly and in the shortest time possible. If the timer reaches zero, you'll lose but can continue playing. Try to get the highest score.
+
+  <p style="margin-top: 2rem; color: white; max-width: 400px; text-align: center; font-family: 'Bitter', serif;">
+    <strong>INSTRUCTIONS:</strong> The moment you decide to play, a timer will start. You'll have to answer all the puzzles correctly and in the shortest time possible. If the timer reaches zero, you'll lose but can continue playing. Try to get the highest score.
   </p>
 </div>
 
@@ -579,12 +603,19 @@ function updateProgressBar() {
   let incorrectTries = 0;
     
   let timeLeft = 60;
+  let selectedTime = 60; // Valor inicial
   let timerStopped = false;
   let timerInterval;
 
   function hideLostMessage() {
     document.getElementById('lostMessage').style.display = 'none';
   }
+    function setTime(seconds) {
+  selectedTime = seconds;
+  timeLeft = seconds;
+  document.getElementById('time').textContent = timeLeft;
+}
+
 
   function stopTimer() {
     timerStopped = true;
@@ -601,6 +632,7 @@ function updateProgressBar() {
     music.currentTime = 0; // lo reinicia
   });
 function startGame() {
+    timeLeft = selectedTime; // Asegúrate de usar el tiempo elegido
   document.getElementById('startScreen').style.display = 'none';
   document.getElementById('gameContent').style.display = 'block';
   startTimer();
