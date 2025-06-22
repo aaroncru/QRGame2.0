@@ -433,15 +433,19 @@
         document.getElementById(showId).style.display = 'block';
         correctSound.currentTime = 0;
         correctSound.play();
+        score += 10; // 🎯 Suma por acierto
       if (showId === 'finalMsg') {
   stopTimer();
   document.getElementById('backgroundMusic').pause(); // Pausa la música al ganar
   document.getElementById('finalButtonContainer').style.display = 'block';
-
+  score += timeLeft * 2; // ⏱ Bonus por tiempo restante
+    showFinalScore();
 }
       } else {
         incorrectSound.currentTime = 0;
         incorrectSound.play();
+        incorrectTries++;
+        score -= 1; // ❌ Penalización
 
         const randomMsg = errorMessages[Math.floor(Math.random() * errorMessages.length)];
         errorMsg.textContent = randomMsg;
@@ -455,6 +459,15 @@
         }, 2500);
       }
     }
+  function showFinalScore() {
+  const finalMsg = document.getElementById('finalMsg');
+  const scoreDisplay = document.createElement('p');
+  scoreDisplay.innerHTML = `🎯 Final Score: <strong>${score}</strong> points`;
+  scoreDisplay.style.marginTop = '1.5rem';
+  scoreDisplay.style.fontSize = '1.3rem';
+  scoreDisplay.style.color = '#fff';
+  finalMsg.appendChild(scoreDisplay);
+}
 
     // Controles de video
     const video = document.getElementById('miVideo');
@@ -466,6 +479,9 @@
     });
   </script>
   <script>
+  let score = 0;
+  let incorrectTries = 0;
+    
   let timeLeft = 60;
   let timerStopped = false;
   let timerInterval;
