@@ -288,6 +288,9 @@
     );
     animation: moveLights 6s linear infinite;
     transform: rotate(25deg);
+      pointer-events: none;
+      z-index: 0;
+
   }
 
   @keyframes moveLights {
@@ -339,6 +342,8 @@
   color: #000;
   font-family: 'Orbitron', sans-serif;
   transition: background 0.3s;
+  z-index: 1; /* <- Asegura que estén encima */
+  position: relative; /* necesario para aplicar z-index */
 }
 
 .timer-buttons button:hover {
