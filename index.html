@@ -305,6 +305,24 @@
     cursor: pointer;
     z-index: 1;
   }
+    
+#progressContainer {
+  width: 80%;
+  background-color: #333;
+  border-radius: 20px;
+  margin: 20px auto;
+  height: 25px;
+  box-shadow: 0 0 10px #f9d923;
+  overflow: hidden;
+}
+
+#progressBar {
+  height: 100%;
+  width: 0%;
+  background-color: #f9d923;
+  transition: width 0.5s ease-in-out;
+  border-radius: 20px;
+}
   </style>
 </head>
 
@@ -376,6 +394,10 @@
   <source src="musica.mp3" type="audio/mpeg">
   Tu navegador no soporta audio.
 </audio>
+  
+<div id="progressContainer">
+  <div id="progressBar"></div>
+</div>
 
 <div id="timer">Time: <span id="time">60</span>s</div>
 <div id="lostMessage">
@@ -492,6 +514,8 @@ setTimeout(() => {
         correctSound.currentTime = 0;
         correctSound.play();
         score += 10; // 🎯 Suma por acierto
+        updateProgressBar();
+
       if (showId === 'finalMsg') {
   stopTimer();
   document.getElementById('backgroundMusic').pause(); // Pausa la música al ganar
@@ -542,6 +566,15 @@ setTimeout(() => {
     });
   </script>
   <script>
+let currentProgress = 0;
+const totalSteps = 4; // total de acertijos
+
+function updateProgressBar() {
+  currentProgress++;
+  const percent = (currentProgress / totalSteps) * 100;
+  document.getElementById('progressBar').style.width = percent + '%';
+}
+    
   let score = 0;
   let incorrectTries = 0;
     
