@@ -12,7 +12,19 @@
   <link href="https://fonts.cdnfonts.com/css/tropika-island" rel="stylesheet" />
 
   <style>
-    
+    @keyframes shakeScreen {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-10px, 0); }
+  40% { transform: translate(10px, 0); }
+  60% { transform: translate(-10px, 0); }
+  80% { transform: translate(10px, 0); }
+  100% { transform: translate(0, 0); }
+}
+
+.shake {
+  animation: shakeScreen 0.5s;
+}
+
 #keepGoingMsg {
   display: none;
   position: fixed;
@@ -479,6 +491,11 @@ setTimeout(() => {
       } else {
         incorrectSound.currentTime = 0;
         incorrectSound.play();
+        document.body.classList.add('shake');
+setTimeout(() => {
+  document.body.classList.remove('shake');
+}, 500);
+
         incorrectTries++;
         score -= 1; // ❌ Penalización
 
