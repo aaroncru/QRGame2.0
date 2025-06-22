@@ -12,6 +12,33 @@
   <link href="https://fonts.cdnfonts.com/css/tropika-island" rel="stylesheet" />
 
   <style>
+
+#keepGoingMsg {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #0a290a;
+  color: #00ff00;
+  padding: 1rem 2rem;
+  font-family: 'Tropika Island', 'Cinzel', serif;
+  font-size: 2rem;
+  border: 3px solid #00ff00;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #00ff00;
+  z-index: 9999;
+  animation: fadeInOutMsg 3s ease-in-out;
+  text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+}
+
+@keyframes fadeInOutMsg {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+    
 #startButtonContainer {
   display: flex;
   flex-direction: column;
@@ -430,6 +457,14 @@
       ];
 
       if (val === correctAnswer.toLowerCase()) {
+        // Mostrar mensaje KEEP GOING DOWN
+const keepGoing = document.getElementById('keepGoingMsg');
+keepGoing.style.display = 'block';
+keepGoing.style.animation = 'fadeInOutMsg 3s ease-in-out';
+setTimeout(() => {
+  keepGoing.style.display = 'none';
+}, 3000);
+
         document.getElementById(showId).style.display = 'block';
         correctSound.currentTime = 0;
         correctSound.play();
@@ -562,7 +597,8 @@ function startGame() {
     });
   });
 </script>
-
+  
+<div id="keepGoingMsg">KEEP GOING DOWN</div>
 
 </body>
 </html>
