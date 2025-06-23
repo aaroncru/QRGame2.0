@@ -606,14 +606,31 @@ setTimeout(() => {
         }, 2500);
       }
     }
-  function showFinalScore() {
+function showFinalScore() {
   const finalMsg = document.getElementById('finalMsg');
+
+  // Calcula el puntaje final
   const scoreDisplay = document.createElement('p');
   scoreDisplay.innerHTML = `🎯 Final Score: <strong>${score}</strong> points`;
   scoreDisplay.style.marginTop = '1.5rem';
   scoreDisplay.style.fontSize = '1.3rem';
   scoreDisplay.style.color = '#fff';
+
+  // Verifica y guarda high score
+  let highScore = localStorage.getItem('qrHighScore') || 0;
+  if (score > highScore) {
+    localStorage.setItem('qrHighScore', score);
+    highScore = score;
+  }
+
+  const highScoreDisplay = document.createElement('p');
+  highScoreDisplay.innerHTML = `🏆 High Score: <strong>${highScore}</strong> points`;
+  highScoreDisplay.style.fontSize = '1.1rem';
+  highScoreDisplay.style.color = '#ffcc00';
+
   finalMsg.appendChild(scoreDisplay);
+  finalMsg.appendChild(highScoreDisplay);
+
 }
 
     // Controles de video
