@@ -106,13 +106,21 @@ body.night-mode #timer {
 }
 
 #startButton {
-  font-size: 2rem;
-  padding: 1rem 2rem;
-  background-color: #f9d923;
+  font-size: 3rem;
+  padding: 1.5rem 3rem;
+  background-color: #9e2bff;
   color: #000;
   border: none;
   border-radius: 10px;
   cursor: pointer;
+  z-index: 1;
+  box-shadow: 0 0 20px #28a74580; /* resplandor */
+  transition: transform 0.2s ease;
+}
+
+#startButton:hover {
+  transform: scale(1.05);
+  background-color: #583d6f; /* tono más oscuro al pasar el mouse */
 }
 
     #timer {
