@@ -781,6 +781,7 @@ if (savedProgress && !window.location.hash.includes('#reset')) {
 
   });
 function startGame() {
+  localStorage.removeItem('qrHighScore'); // 🔥 Resetea al iniciar (opcional)
     timeLeft = selectedTime; // Asegúrate de usar el tiempo elegido
     score = 0;              // ✅ Reinicia el puntaje
     incorrectTries = 0;     // (opcional) Reinicia errores también
