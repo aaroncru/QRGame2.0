@@ -649,14 +649,23 @@ setTimeout(() => {
 function showFinalScore() {
   const finalMsg = document.getElementById('finalMsg');
 
-  // Calcula el puntaje final
+  // 🔄 Limpiar el contenido actual antes de añadir
+  finalMsg.innerHTML = `
+    🎉 <strong>Well done!</strong><br>
+    You’ve conquered the riddles and unlocked the final secret of the QR GAME!<br>
+    Prepare for your next adventure...
+
+    <img src="felicitaciones.gif" alt="Felicidades" style="margin-top: 1rem; max-width: 300px; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.2);" />
+  `;
+
+  // 🎯 Mostrar puntaje final
   const scoreDisplay = document.createElement('p');
   scoreDisplay.innerHTML = `🎯 Final Score: <strong>${score}</strong> points`;
   scoreDisplay.style.marginTop = '1.5rem';
   scoreDisplay.style.fontSize = '1.3rem';
   scoreDisplay.style.color = '#fff';
 
-  // Verifica y guarda high score
+  // 🏆 Mostrar high score
   let highScore = localStorage.getItem('qrHighScore') || 0;
   if (score > highScore) {
     localStorage.setItem('qrHighScore', score);
@@ -668,10 +677,28 @@ function showFinalScore() {
   highScoreDisplay.style.fontSize = '1.1rem';
   highScoreDisplay.style.color = '#ffcc00';
 
+  // (opcional) Mensaje adicional según puntaje
+  const messageDisplay = document.createElement('p');
+  messageDisplay.style.fontSize = '1.2rem';
+  messageDisplay.style.marginTop = '1rem';
+  messageDisplay.style.color = '#aaffaa';
+
+  if (score >= 80) {
+    messageDisplay.textContent = "🌟 Amazing! You’re a puzzle master!";
+  } else if (score >= 50) {
+    messageDisplay.textContent = "💡 Great job! You’ve got skills!";
+  } else if (score >= 20) {
+    messageDisplay.textContent = "👍 Good effort! Try again for a better score.";
+  } else {
+    messageDisplay.textContent = "🧠 Keep practicing! You’ll get there!";
+  }
+
+  // Agregar todos al mensaje final
   finalMsg.appendChild(scoreDisplay);
   finalMsg.appendChild(highScoreDisplay);
-
+  finalMsg.appendChild(messageDisplay);
 }
+
 
     // Controles de video
     const video = document.getElementById('miVideo');
