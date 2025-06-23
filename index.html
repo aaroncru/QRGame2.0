@@ -711,7 +711,7 @@ function showFinalScore() {
   </script>
   <script>
 let currentProgress = 0;
-const totalSteps = 4; // total de acertijos
+const totalSteps = 5; // total de acertijos
 
 function updateProgressBar() {
   currentProgress++;
@@ -722,7 +722,7 @@ function updateProgressBar() {
   let score = 0;
   let incorrectTries = 0;
     
-  let timeLeft = 60;
+  let timeLeft;
   let selectedTime = 60; // Valor inicial
   let timerStopped = false;
   let timerInterval;
