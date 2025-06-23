@@ -881,6 +881,16 @@ showFinalScore();
     score -= 1;
   }
 }
+function showPiecesDisordered() {
+  const container = document.getElementById('puzzleContainer');
+
+  const fixedDisordered = ['piece3', 'piece1', 'piece2']; // el orden deseado para mostrar
+
+  fixedDisordered.forEach(id => {
+    const piece = document.getElementById(id);
+    container.appendChild(piece);
+  });
+}
 
 </script>
 
