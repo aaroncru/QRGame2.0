@@ -395,23 +395,6 @@ body.night-mode #timer {
 .timer-buttons button:hover {
   background-color: #ffcd38;
 }
-#startScreen button {
-  font-size: 1.5rem;
-  padding: 1rem 2.5rem;
-  margin: 1rem;
-  background-color: #f9d923;
-  color: #000;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  z-index: 1;
-  transition: transform 0.2s ease;
-}
-
-#startScreen button:hover {
-  background-color: #ffe45e;
-  transform: scale(1.05);
-}
 
   </style>
 </head>
@@ -419,11 +402,6 @@ body.night-mode #timer {
 <body>
   
  <div id="startScreen" class="start-screen">
-  <button onclick="window.location.href='https://www.youtube.com/watch?v=m6jfZa00vkY'">Raven's Eye QR</button>
-  <button onclick="window.location.href='https://www.youtube.com/watch?v=joAb83GTpbM'">Conjured Kingdoms QR</button>
-  <button onclick="startGame()">Normal QR</button>
-</div>
-
 <div id="socialButtonsStart" style="margin-top: 1rem; display: flex; gap: 0.5rem; justify-content: center;">
     <button onclick="window.location.href='https://www.alaskaescaperooms.com/'" style="background: none; border: none; cursor: pointer;">
       <img src="alaskasocial.png" alt="Website" style="width: 80px; height: 80px;">
@@ -448,6 +426,7 @@ body.night-mode #timer {
 
     </div>
   </div>
+<button onclick="startGame()">PLAY</button>
 
   <p style="margin-top: 2rem; color: white; max-width: 400px; text-align: center; font-family: 'Bitter', serif;">
     <strong>INSTRUCTIONS:</strong> The moment you decide to play, a timer will start. You'll have to answer all the puzzles correctly and in the shortest time possible. If the timer reaches zero, you'll lose but can continue playing. Try to get the highest score.
