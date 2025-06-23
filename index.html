@@ -571,6 +571,13 @@ body.night-mode #timer {
       ];
 
       if (val === correctAnswer.toLowerCase()) {
+        // Guarda el progreso actual
+localStorage.setItem('qrProgress', JSON.stringify({
+  currentProgress,
+  score,
+  timeLeft
+}));
+
         // Mostrar mensaje KEEP GOING DOWN
 const keepGoing = document.getElementById('keepGoingMsg');
 keepGoing.style.display = 'block';
@@ -692,6 +699,35 @@ function updateProgressBar() {
     const music = document.getElementById('backgroundMusic');
     music.pause();         // detiene el audio si llega a reproducirse
     music.currentTime = 0; // lo reinicia
+
+    const savedProgress = JSON.parse(localStorage.getItem('qrProgress'));
+if (savedProgress && !window.location.hash.includes('#reset')) {
+  const resume = confirm("¡Bienvenido de nuevo! ¿Quieres continuar donde lo dejaste?");
+  if (resume) {
+    currentProgress = savedProgress.currentProgress || 0;
+    score = savedProgress.score || 0;
+    timeLeft = savedProgress.timeLeft || selectedTime;
+    selectedTime = timeLeft;
+    document.getElementById('time').textContent = timeLeft;
+    
+    // Mostrar secciones desbloqueadas
+    for (let i = 0; i < currentProgress; i++) {
+      document.getElementById(`section${i + 1}`).style.display = 'block';
+    }
+
+    // Mostrar el contenido del juego directamente
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('gameContent').style.display = 'block';
+
+    startTimer();
+    const music = document.getElementById('backgroundMusic');
+    music.volume = 0.0001;
+    music.play();
+  } else {
+    localStorage.removeItem('qrProgress');
+  }
+}
+
   });
 function startGame() {
     timeLeft = selectedTime; // Asegúrate de usar el tiempo elegido
