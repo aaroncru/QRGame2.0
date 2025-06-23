@@ -413,6 +413,14 @@ body.night-mode #timer {
   box-shadow: 0 0 15px #fff;
   transform: scale(1.05);
 }
+.puzzle-piece {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  cursor: grab;
+  box-shadow: 0 0 5px #fff;
+}
 
   </style>
 </head>
@@ -510,9 +518,30 @@ body.night-mode #timer {
 
     <div id="section3" class="section">
       <h2>Clue 3 unlocked</h2>
-      <p>You've reached the final lock. Enter the final code:</p>
+      <p>You've reached the pre-final lock. Enter the pre-final code:</p>
       <input type="text" id="input4" placeholder="Enter code" />
-      <button onclick="checkAnswer('input4','2025','finalMsg')">Unlock</button>
+      <button onclick="checkAnswer('input4','2025','section4')">Unlock</button>
+
+      <div id="section4" class="section">
+  <h2>Clue 4: Puzzle Challenge</h2>
+  <p><strong>Arrange the images in the correct order:</strong></p>
+
+  <div id="puzzleContainer" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+    <img src="img1.jpg" id="piece1" draggable="true" class="puzzle-piece" data-order="1">
+    <img src="img2.jpg" id="piece2" draggable="true" class="puzzle-piece" data-order="2">
+    <img src="img3.jpg" id="piece3" draggable="true" class="puzzle-piece" data-order="3">
+  </div>
+
+  <div style="margin-top: 1rem;">
+    <button onclick="checkPuzzleOrder()">Check Order</button>
+  </div>
+
+  <div id="puzzleSuccess" class="success" style="display:none;">
+    🧠 Puzzle completed! You’re a true codebreaker!
+  </div>
+</div>
+
+      
       <div id="finalMsg" class="success">
 
         🎉 <strong>Well done!</strong><br>
@@ -807,6 +836,53 @@ function startGame() {
   window.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('night-mode');
   });
+
+let draggedPiece = null;
+
+document.querySelectorAll('.puzzle-piece').forEach(piece => {
+  piece.addEventListener('dragstart', (e) => {
+    draggedPiece = e.target;
+  });
+
+  piece.addEventListener('dragover', (e) => {
+    e.preventDefault();
+  });
+
+  piece.addEventListener('drop', (e) => {
+    e.preventDefault();
+    if (draggedPiece && draggedPiece !== e.target) {
+      // Intercambiar elementos
+      const tempSrc = e.target.src;
+      const tempOrder = e.target.dataset.order;
+
+      e.target.src = draggedPiece.src;
+      e.target.dataset.order = draggedPiece.dataset.order;
+
+      draggedPiece.src = tempSrc;
+      draggedPiece.dataset.order = tempOrder;
+    }
+  });
+});
+
+function checkPuzzleOrder() {
+  const pieces = document.querySelectorAll('.puzzle-piece');
+  const correctOrder = ['1', '2', '3'];
+  const currentOrder = Array.from(pieces).map(p => p.dataset.order);
+
+  if (JSON.stringify(correctOrder) === JSON.stringify(currentOrder)) {
+    document.getElementById('puzzleSuccess').style.display = 'block';
+    score += 10;
+    updateProgressBar();
+
+    // Si esta es la última sección, puedes mostrar el final
+    // document.getElementById('finalMsg').style.display = 'block';
+    // stopTimer();
+  } else {
+    alert("❌ Try again! The order is not correct.");
+    score -= 1;
+  }
+}
+
 </script>
 
 </body>
