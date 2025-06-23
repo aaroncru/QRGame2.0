@@ -864,23 +864,51 @@ function checkPuzzleOrder() {
   const correctOrder = ['1', '2', '3'];
   const currentOrder = Array.from(pieces).map(p => p.dataset.order);
 
-  if (JSON.stringify(correctOrder) === JSON.stringify(currentOrder)) {
-   score += 10;
-updateProgressBar();
-stopTimer();
-document.getElementById('backgroundMusic').pause();
-document.getElementById('finalMsg').style.display = 'block';
-document.getElementById('finalButtonContainer').style.display = 'block';
-showFinalScore();
+  const incorrectSound = document.getElementById('incorrectSound');
+  const errorMsg = document.getElementById('errorMsg');
 
-    // Si esta es la última sección, puedes mostrar el final
-    // document.getElementById('finalMsg').style.display = 'block';
-    // stopTimer();
+  const errorMessages = [
+    "❌ Incorrect. Try again!",
+    "😕 Nope. Not quite.",
+    "🚫 That's not it!",
+    "🙈 Try another guess!",
+    "😬 Not correct. Keep going!"
+  ];
+
+  if (JSON.stringify(correctOrder) === JSON.stringify(currentOrder)) {
+    score += 10;
+    updateProgressBar();
+    stopTimer();
+    document.getElementById('backgroundMusic').pause();
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalButtonContainer').style.display = 'block';
+    showFinalScore();
   } else {
-    alert("❌ Try again! The order is not correct.");
+    // 🔊 Sonido
+    incorrectSound.currentTime = 0;
+    incorrectSound.play();
+
+    // 😵 Vibración
+    document.body.classList.add('shake');
+    setTimeout(() => {
+      document.body.classList.remove('shake');
+    }, 500);
+
+    // ❌ Mensaje aleatorio
+    const randomMsg = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+    errorMsg.textContent = randomMsg;
+    errorMsg.style.display = 'block';
+    errorMsg.style.animation = 'fadeInOut 2.5s ease-in-out';
+
+    // Quitar mensaje tras un tiempo
+    setTimeout(() => {
+      errorMsg.style.display = 'none';
+    }, 2500);
+
     score -= 1;
   }
 }
+
 function showPiecesDisordered() {
   const container = document.getElementById('puzzleContainer');
 
