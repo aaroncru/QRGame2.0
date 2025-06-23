@@ -755,6 +755,11 @@ if (savedProgress && !window.location.hash.includes('#reset')) {
   });
 function startGame() {
     timeLeft = selectedTime; // Asegúrate de usar el tiempo elegido
+    score = 0;              // ✅ Reinicia el puntaje
+    incorrectTries = 0;     // (opcional) Reinicia errores también
+    currentProgress = 0;    // ✅ Reinicia progreso si usas barra
+    updateProgressBar();    // Reinicia visualmente la barra
+  
   document.getElementById('startScreen').style.display = 'none';
   document.getElementById('gameContent').style.display = 'block';
 
