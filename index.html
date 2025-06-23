@@ -395,7 +395,24 @@ body.night-mode #timer {
   box-shadow: 0 0 10px #ffe3bd;
   transform: scale(1.05);
 }
+.new-game-btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  background-color: #8c3053;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #fff;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', sans-serif;
+}
 
+.new-game-btn:hover {
+  background-color: #ff067b;
+  box-shadow: 0 0 15px #fff;
+  transform: scale(1.05);
+}
 
   </style>
 </head>
@@ -507,17 +524,10 @@ body.night-mode #timer {
     </div>
 
 <div id="finalButtonContainer" style="margin-top: 1.5rem; display: none; text-align: center;">
-  <button onclick="window.location.href='https://aaroncru.github.io/QRGameNew1/'" style="
-    padding: 0.8rem 1.5rem;
-    font-size: 1.2rem;
-    background-color: #f9d923;
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 0 10px #f9d923;
-  ">
+  
+  <button class="new-game-btn" onclick="window.location.href='https://aaroncru.github.io/QRGameNew1/'">
     NEW GAME
+    </button>
     <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
         </button>
      <div id="socialButtons" style="margin-top: 1rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
