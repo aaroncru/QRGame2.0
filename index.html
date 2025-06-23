@@ -527,21 +527,16 @@ body.night-mode #timer {
   <p><strong>Arrange the images in the correct order:</strong></p>
 
   <div id="puzzleContainer" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-    <img src="img1.jpg" id="piece1" draggable="true" class="puzzle-piece" data-order="1">
-    <img src="img2.jpg" id="piece2" draggable="true" class="puzzle-piece" data-order="2">
-    <img src="img3.jpg" id="piece3" draggable="true" class="puzzle-piece" data-order="3">
+    <img src="img1.JPG" id="piece1" draggable="true" class="puzzle-piece" data-order="1">
+    <img src="img2.JPG" id="piece2" draggable="true" class="puzzle-piece" data-order="2">
+    <img src="img3.JPG" id="piece3" draggable="true" class="puzzle-piece" data-order="3">
   </div>
 
   <div style="margin-top: 1rem;">
     <button onclick="checkPuzzleOrder()">Check Order</button>
   </div>
-
-  <div id="puzzleSuccess" class="success" style="display:none;">
-    🧠 Puzzle completed! You’re a true codebreaker!
-  </div>
 </div>
-
-      
+ 
       <div id="finalMsg" class="success">
 
         🎉 <strong>Well done!</strong><br>
@@ -870,9 +865,13 @@ function checkPuzzleOrder() {
   const currentOrder = Array.from(pieces).map(p => p.dataset.order);
 
   if (JSON.stringify(correctOrder) === JSON.stringify(currentOrder)) {
-    document.getElementById('puzzleSuccess').style.display = 'block';
-    score += 10;
-    updateProgressBar();
+   score += 10;
+updateProgressBar();
+stopTimer();
+document.getElementById('backgroundMusic').pause();
+document.getElementById('finalMsg').style.display = 'block';
+document.getElementById('finalButtonContainer').style.display = 'block';
+showFinalScore();
 
     // Si esta es la última sección, puedes mostrar el final
     // document.getElementById('finalMsg').style.display = 'block';
