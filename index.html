@@ -652,7 +652,7 @@ select {
     <div class="simon-btn yellow" data-color="yellow"></div>
     <div class="simon-btn blue" data-color="blue"></div>
   </div>
-  <button onclick="startSimon()">Start Sequence</button>
+  <button onclick="startSimon()" style="margin-top: 2rem;">Start Sequence</button>
 </div>
 
  
@@ -802,17 +802,17 @@ function showFinalScore() {
   messageDisplay.style.marginTop = '1rem';
   messageDisplay.style.color = '#aaffaa';
 
-  if (score >= 80) {
+  if (score >= 100) {
     messageDisplay.textContent = "🌟 Amazing! You got the HIGHEST SCORE!";
-    } else if (score >= 60) {
+    } else if (score >= 90) {
     messageDisplay.textContent = "🧙 You are incredible! Riddles Master!";
-  } else if (score >= 50) {
+  } else if (score >= 80) {
     messageDisplay.textContent = "🔥 You are legen-, wait for it, -dary LEGENDARY";
-  } else if (score >= 40) {
+  } else if (score >= 70) {
     messageDisplay.textContent = "💡 Great job! You’ve got skills!";
-  } else if (score >= 30) {
+  } else if (score >= 60) {
     messageDisplay.textContent = "👍 Good effort! Try again for a better score.";
-     } else if (score >= 20) {
+     } else if (score >= 50) {
     messageDisplay.textContent = "😊 Nice try! You can do it better.";
   } else {
     messageDisplay.textContent = "🧠 Keep practicing! You’ll get there!";
@@ -836,7 +836,7 @@ function showFinalScore() {
   </script>
   <script>
 let currentProgress = 0;
-const totalSteps = 9; // total de acertijos
+const totalSteps = 10; // total de acertijos
 
 function updateProgressBar() {
   currentProgress++;
@@ -1120,6 +1120,7 @@ function checkLock() {
     correctSound.currentTime = 0;
     correctSound.play();
     score += 10;
+    currentProgress++; // ¡Importante!
     updateProgressBar();
     localStorage.setItem('qrProgress', JSON.stringify({ currentProgress, score, timeLeft }));
 
@@ -1219,6 +1220,7 @@ function checkSimonInput() {
     if (simonSequence.length === 3) { // puedes cambiar la dificultad
       score += 10;
       updateProgressBar();
+      currentProgress++; // ¡Importante!
       stopTimer();
       document.getElementById('backgroundMusic').pause();
       document.getElementById('finalMsg').style.display = 'block';
