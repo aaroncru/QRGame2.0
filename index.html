@@ -931,12 +931,20 @@ function checkPuzzleOrder() {
 
   if (JSON.stringify(correctOrder) === JSON.stringify(currentOrder)) {
     score += 10;
+    currentProgress++; // ¡Importante!
     updateProgressBar();
     stopTimer();
     document.getElementById('backgroundMusic').pause();
     document.getElementById('finalMsg').style.display = 'block';
     document.getElementById('finalButtonContainer').style.display = 'block';
     showFinalScore();
+
+     // 🔁 GUARDAR PROGRESO
+    localStorage.setItem('qrProgress', JSON.stringify({
+      currentProgress,
+      score,
+      timeLeft
+    }));
   } else {
     // 🔊 Sonido
     incorrectSound.currentTime = 0;
