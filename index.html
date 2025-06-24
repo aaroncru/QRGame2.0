@@ -991,7 +991,6 @@ setTimeout(() => {
     score += 10;
     currentProgress++; // ¡Importante!
     updateProgressBar();
-    stopTimer();
      // 🔁 GUARDAR PROGRESO
     localStorage.setItem('qrProgress', JSON.stringify({
       currentProgress,
@@ -1048,7 +1047,6 @@ function checkPuzzleOrder() {
     score += 10;
     currentProgress++; // ¡Importante!
     updateProgressBar();
-    stopTimer();
     document.getElementById('sectionLock').style.display = 'block';
 
      // 🔁 GUARDAR PROGRESO
@@ -1076,7 +1074,7 @@ function checkLock() {
   const d2 = document.getElementById('dial2').value;
   const d3 = document.getElementById('dial3').value;
 
-  const correctCode = ['7', '1', '9']; // vida de gato (7), impar menor (1), impar mayor (9)
+  const correctCode = ['9', '1', '9']; // vida de gato (7), impar menor (1), impar mayor (9)
 
   if ([d1, d2, d3].join('') === correctCode.join('')) {
     // ✅ Correcto
