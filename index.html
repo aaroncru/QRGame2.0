@@ -683,12 +683,14 @@ function showFinalScore() {
   messageDisplay.style.marginTop = '1rem';
   messageDisplay.style.color = '#aaffaa';
 
-  if (score >= 40) {
-    messageDisplay.textContent = "🌟 Amazing! You’re a puzzle master!";
-  } else if (score >= 30) {
+  if (score >= 50) {
+    messageDisplay.textContent = "🌟 Amazing! You got the HIGHEST SCORE!";
+  } else if (score >= 40) {
     messageDisplay.textContent = "💡 Great job! You’ve got skills!";
-  } else if (score >= 20) {
+  } else if (score >= 30) {
     messageDisplay.textContent = "👍 Good effort! Try again for a better score.";
+     } else if (score >= 20) {
+    messageDisplay.textContent = "😊 Nice try! You can do it better.";
   } else {
     messageDisplay.textContent = "🧠 Keep practicing! You’ll get there!";
   }
