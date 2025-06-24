@@ -421,6 +421,19 @@ body.night-mode #timer {
   cursor: grab;
   box-shadow: 0 0 5px #fff;
 }
+.choice-img {
+  width: 150px;
+  height: auto;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 5px #aaa;
+}
+
+.choice-img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #f9d923;
+}
 
   </style>
 </head>
@@ -537,9 +550,22 @@ body.night-mode #timer {
       <p>You've reached the pre-final lock. Enter the pre-final code:</p>
       <input type="text" id="input6" placeholder="Enter code" />
       <button onclick="checkAnswer('input6','2025','section6')">Unlock</button>
-    
+
       <div id="section6" class="section">
-  <h2>Clue 6: Puzzle Challenge</h2>
+  <h2>Clue 6 unlocked</h2>
+  <p><strong>"Click de picture that represent something that never sleeps."</strong></p>
+
+  <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+    <img src="sol.jpg" alt="Sol" class="choice-img" onclick="checkImageAnswer('sol')">
+    <img src="luna.jpg" alt="Luna" class="choice-img" onclick="checkImageAnswer('luna')">
+    <img src="ciudad.jpg" alt="Ciudad" class="choice-img" onclick="checkImageAnswer('ciudad')">
+    <img src="buho.jpg" alt="Búho" class="choice-img" onclick="checkImageAnswer('buho')">
+  </div>
+</div>
+
+    
+      <div id="section7" class="section">
+  <h2>Clue 7: Puzzle Challenge</h2>
   <p><strong>Arrange the images in the correct order:</strong></p>
 
   <div id="puzzleContainer" style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
@@ -912,6 +938,54 @@ document.querySelectorAll('.puzzle-piece').forEach(piece => {
     }
   });
 });
+function checkImageAnswer(answer) {
+  const correct = 'ciudad'; // puedes cambiar según la pista
+
+  if (answer === correct) {
+    document.getElementById('section7').style.display = 'block';
+    score += 10;
+    currentProgress++; // ¡Importante!
+    updateProgressBar();
+    stopTimer();
+    document.getElementById('backgroundMusic').pause();
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalButtonContainer').style.display = 'block';
+    showFinalScore();
+     // 🔁 GUARDAR PROGRESO
+    localStorage.setItem('qrProgress', JSON.stringify({
+      currentProgress,
+      score,
+      timeLeft
+    }));
+  } else {
+    // Efectos de error
+    const incorrectSound = document.getElementById('incorrectSound');
+    incorrectSound.currentTime = 0;
+    incorrectSound.play();
+    document.body.classList.add('shake');
+    setTimeout(() => {
+      document.body.classList.remove('shake');
+    }, 500);
+    
+    const errorMsg = document.getElementById('errorMsg');
+    const errorMessages = [
+      "❌ Incorrect. Try again!",
+      "😕 Nope. Not quite.",
+      "🚫 That's not it!",
+      "🙈 Try another guess!",
+      "😬 Not correct. Keep going!"
+    ];
+    const randomMsg = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+    errorMsg.textContent = randomMsg;
+    errorMsg.style.display = 'block';
+    errorMsg.style.animation = 'fadeInOut 2.5s ease-in-out';
+
+    score -= 1;
+    setTimeout(() => {
+      errorMsg.style.display = 'none';
+    }, 2500);
+  }
+}
 
 function checkPuzzleOrder() {
   const pieces = document.querySelectorAll('.puzzle-piece');
