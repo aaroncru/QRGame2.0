@@ -725,7 +725,7 @@ function showFinalScore() {
   messageDisplay.style.marginTop = '1rem';
   messageDisplay.style.color = '#aaffaa';
 
-  if (score >= 70) {
+  if (score >= 80) {
     messageDisplay.textContent = "🌟 Amazing! You got the HIGHEST SCORE!";
     } else if (score >= 60) {
     messageDisplay.textContent = "🧙 You are incredible! Riddles Master!";
@@ -759,7 +759,7 @@ function showFinalScore() {
   </script>
   <script>
 let currentProgress = 0;
-const totalSteps = 7; // total de acertijos
+const totalSteps = 8; // total de acertijos
 
 function updateProgressBar() {
   currentProgress++;
@@ -939,7 +939,7 @@ document.querySelectorAll('.puzzle-piece').forEach(piece => {
   });
 });
 function checkImageAnswer(answer) {
-  const correct = 'ciudad'; // puedes cambiar según la pista
+  const correct = 'ciudad';
 
   if (answer === correct) {
     document.getElementById('section7').style.display = 'block';
