@@ -434,6 +434,14 @@ body.night-mode #timer {
   transform: scale(1.1);
   box-shadow: 0 0 15px #f9d923;
 }
+select {
+  font-size: 2rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  background-color: #222;
+  color: #f9d923;
+  border: 2px solid #f9d923;
+}
 
   </style>
 </head>
@@ -547,7 +555,7 @@ body.night-mode #timer {
 
     <div id="section5" class="section">
       <h2>Clue 5 unlocked</h2>
-      <p>You've reached the pre-final lock. Enter the pre-final code:</p>
+      <p>ENTER the 4 digit code:</p>
       <input type="text" id="input6" placeholder="Enter code" />
       <button onclick="checkAnswer('input6','2025','section6')">Unlock</button>
 
@@ -563,7 +571,6 @@ body.night-mode #timer {
   </div>
 </div>
 
-    
       <div id="section7" class="section">
   <h2>Clue 7: Puzzle Challenge</h2>
   <p><strong>Arrange the images in the correct order:</strong></p>
@@ -578,6 +585,37 @@ body.night-mode #timer {
     <button onclick="checkPuzzleOrder()">Check Order</button>
   </div>
 </div>
+
+      <div id="sectionLock" class="section">
+  <h2>🔐 Unlock the Lock</h2>
+  <p><strong>Clue:</strong> The code is the number of lives a cat has, followed by the smallest and then the largest odd one-digit number.</p>
+
+  <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+    <select id="dial1">
+      <option value="">-</option>
+      <option>1</option><option>2</option><option>3</option>
+      <option>4</option><option>5</option><option>6</option>
+      <option>7</option><option>8</option><option>9</option>
+    </select>
+
+    <select id="dial2">
+      <option value="">-</option>
+      <option>1</option><option>2</option><option>3</option>
+      <option>4</option><option>5</option><option>6</option>
+      <option>7</option><option>8</option><option>9</option>
+    </select>
+
+    <select id="dial3">
+      <option value="">-</option>
+      <option>1</option><option>2</option><option>3</option>
+      <option>4</option><option>5</option><option>6</option>
+      <option>7</option><option>8</option><option>9</option>
+    </select>
+  </div>
+
+  <button onclick="checkLock()">Unlock</button>
+</div>
+
  
       <div id="finalMsg" class="success">
 
@@ -1011,10 +1049,7 @@ function checkPuzzleOrder() {
     currentProgress++; // ¡Importante!
     updateProgressBar();
     stopTimer();
-    document.getElementById('backgroundMusic').pause();
-    document.getElementById('finalMsg').style.display = 'block';
-    document.getElementById('finalButtonContainer').style.display = 'block';
-    showFinalScore();
+    document.getElementById('sectionLock').style.display = 'block';
 
      // 🔁 GUARDAR PROGRESO
     localStorage.setItem('qrProgress', JSON.stringify({
@@ -1033,18 +1068,55 @@ function checkPuzzleOrder() {
       document.body.classList.remove('shake');
     }, 500);
 
-    // ❌ Mensaje aleatorio
-    const randomMsg = errorMessages[Math.floor(Math.random() * errorMessages.length)];
-    errorMsg.textContent = randomMsg;
+    score -= 1;
+  }
+}
+function checkLock() {
+  const d1 = document.getElementById('dial1').value;
+  const d2 = document.getElementById('dial2').value;
+  const d3 = document.getElementById('dial3').value;
+
+  const correctCode = ['7', '1', '9']; // vida de gato (7), impar menor (1), impar mayor (9)
+
+  if ([d1, d2, d3].join('') === correctCode.join('')) {
+    // ✅ Correcto
+    correctSound.currentTime = 0;
+    correctSound.play();
+    score += 10;
+    updateProgressBar();
+    localStorage.setItem('qrProgress', JSON.stringify({ currentProgress, score, timeLeft }));
+
+    document.getElementById('keepGoingMsg').style.display = 'block';
+    setTimeout(() => document.getElementById('keepGoingMsg').style.display = 'none', 3000);
+
+    // Mostrar siguiente sección
+    document.getElementById('finalMsg').style.display = 'block';
+    document.getElementById('finalButtonContainer').style.display = 'block';
+    stopTimer();
+    document.getElementById('backgroundMusic').pause();
+    //score += timeLeft * 2;
+    showFinalScore();
+  } else {
+    // ❌ Incorrecto
+    incorrectSound.currentTime = 0;
+    incorrectSound.play();
+    document.body.classList.add('shake');
+    setTimeout(() => document.body.classList.remove('shake'), 500);
+
+    incorrectTries++;
+    score -= 1;
+
+    const errorMsg = document.getElementById('errorMsg');
+    const msgs = [
+      "❌ Incorrect. Try again!",
+      "😕 Not the code.",
+      "🔐 Locked! Try a new combo.",
+      "🚫 Wrong numbers!",
+    ];
+    errorMsg.textContent = msgs[Math.floor(Math.random() * msgs.length)];
     errorMsg.style.display = 'block';
     errorMsg.style.animation = 'fadeInOut 2.5s ease-in-out';
-
-    // Quitar mensaje tras un tiempo
-    setTimeout(() => {
-      errorMsg.style.display = 'none';
-    }, 2500);
-
-    score -= 1;
+    setTimeout(() => (errorMsg.style.display = 'none'), 2500);
   }
 }
 
