@@ -942,6 +942,13 @@ function checkImageAnswer(answer) {
   const correct = 'ciudad';
 
   if (answer === correct) {
+     // Mostrar mensaje KEEP GOING DOWN
+const keepGoing = document.getElementById('keepGoingMsg');
+keepGoing.style.display = 'block';
+keepGoing.style.animation = 'fadeInOutMsg 3s ease-in-out';
+setTimeout(() => {
+  keepGoing.style.display = 'none';
+}, 3000);
     document.getElementById('section7').style.display = 'block';
     score += 10;
     currentProgress++; // ¡Importante!
