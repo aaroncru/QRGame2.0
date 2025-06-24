@@ -699,8 +699,12 @@ function showFinalScore() {
   messageDisplay.style.marginTop = '1rem';
   messageDisplay.style.color = '#aaffaa';
 
-  if (score >= 50) {
+  if (score >= 70) {
     messageDisplay.textContent = "🌟 Amazing! You got the HIGHEST SCORE!";
+    } else if (score >= 60) {
+    messageDisplay.textContent = "🧙 You are incredible! Riddles Master!";
+  } else if (score >= 50) {
+    messageDisplay.textContent = "🔥 You are legen-, wait for it, -dary LEGENDARY";
   } else if (score >= 40) {
     messageDisplay.textContent = "💡 Great job! You’ve got skills!";
   } else if (score >= 30) {
