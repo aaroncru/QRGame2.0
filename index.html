@@ -442,6 +442,33 @@ select {
   color: #f9d923;
   border: 2px solid #f9d923;
 }
+    #simonBoard {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.simon-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 15px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.simon-btn.green { background-color: #28a745; }
+.simon-btn.red { background-color: #dc3545; }
+.simon-btn.yellow { background-color: #ffc107; }
+.simon-btn.blue { background-color: #007bff; }
+
+.simon-btn.active {
+  opacity: 1;
+  box-shadow: 0 0 20px white;
+}
+
 
   </style>
 </head>
@@ -614,6 +641,18 @@ select {
   </div>
 
   <button onclick="checkLock()" style="margin-top: 2rem;">Unlock</button>
+</div>
+      
+<div id="simonSection" class="section">
+  <h2>Memory Challenge</h2>
+  <p>Repeat the sequence of colors:</p>
+  <div id="simonBoard">
+    <div class="simon-btn green" data-color="green"></div>
+    <div class="simon-btn red" data-color="red"></div>
+    <div class="simon-btn yellow" data-color="yellow"></div>
+    <div class="simon-btn blue" data-color="blue"></div>
+  </div>
+  <button onclick="startSimon()">Start Sequence</button>
 </div>
 
  
@@ -1088,12 +1127,7 @@ function checkLock() {
     setTimeout(() => document.getElementById('keepGoingMsg').style.display = 'none', 3000);
 
     // Mostrar siguiente sección
-    document.getElementById('finalMsg').style.display = 'block';
-    document.getElementById('finalButtonContainer').style.display = 'block';
-    stopTimer();
-    document.getElementById('backgroundMusic').pause();
-    //score += timeLeft * 2;
-    showFinalScore();
+    document.getElementById('simonSection').style.display = 'block';
   } else {
     // ❌ Incorrecto
     incorrectSound.currentTime = 0;
@@ -1127,6 +1161,74 @@ function showPiecesDisordered() {
     const piece = document.getElementById(id);
     container.appendChild(piece);
   });
+}
+let simonSequence = [];
+let playerSequence = [];
+let simonButtons = document.querySelectorAll('.simon-btn');
+let colors = ['green', 'red', 'yellow', 'blue'];
+let simonStep = 0;
+
+function startSimon() {
+  simonSequence = [];
+  playerSequence = [];
+  simonStep = 0;
+  nextSimonStep();
+}
+
+function nextSimonStep() {
+  const nextColor = colors[Math.floor(Math.random() * colors.length)];
+  simonSequence.push(nextColor);
+  playerSequence = [];
+  showSimonSequence();
+}
+
+function showSimonSequence() {
+  let i = 0;
+  const interval = setInterval(() => {
+    const color = simonSequence[i];
+    const btn = document.querySelector(`.simon-btn.${color}`);
+    btn.classList.add('active');
+    setTimeout(() => btn.classList.remove('active'), 400);
+    i++;
+    if (i >= simonSequence.length) clearInterval(interval);
+  }, 700);
+}
+
+// Registrar clics del jugador
+simonButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const color = btn.dataset.color;
+    playerSequence.push(color);
+    btn.classList.add('active');
+    setTimeout(() => btn.classList.remove('active'), 300);
+    checkSimonInput();
+  });
+});
+
+function checkSimonInput() {
+  const currentIndex = playerSequence.length - 1;
+  if (playerSequence[currentIndex] !== simonSequence[currentIndex]) {
+    alert("❌ Wrong sequence! Try again.");
+    // Puedes restar puntos o reiniciar
+    score -= 1;
+    return;
+  }
+
+  // Si acierta toda la secuencia
+  if (playerSequence.length === simonSequence.length) {
+    if (simonSequence.length === 3) { // puedes cambiar la dificultad
+      score += 10;
+      updateProgressBar();
+      stopTimer();
+      document.getElementById('backgroundMusic').pause();
+      document.getElementById('finalMsg').style.display = 'block';
+      document.getElementById('finalButtonContainer').style.display = 'block';
+      showFinalScore();
+    } else {
+      // continuar la secuencia
+      setTimeout(() => nextSimonStep(), 800);
+    }
+  }
 }
 
 </script>
