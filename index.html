@@ -1223,10 +1223,16 @@ function checkSimonInput() {
 
   // Si acierta toda la secuencia
   if (playerSequence.length === simonSequence.length) {
-    if (simonSequence.length === 3) { // puedes cambiar la dificultad
+    if (simonSequence.length === 7) { // puedes cambiar la dificultad
       score += 10;
       updateProgressBar();
       currentProgress++; // ¡Importante!
+        // 🔁 GUARDAR PROGRESO
+    localStorage.setItem('qrProgress', JSON.stringify({
+      currentProgress,
+      score,
+      timeLeft
+    }));
       stopTimer();
       document.getElementById('backgroundMusic').pause();
       document.getElementById('finalMsg').style.display = 'block';
