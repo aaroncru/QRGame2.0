@@ -1129,6 +1129,12 @@ function checkLock() {
 
     // Mostrar siguiente sección
     document.getElementById('simonSection').style.display = 'block';
+     // 🔁 GUARDAR PROGRESO
+    localStorage.setItem('qrProgress', JSON.stringify({
+      currentProgress,
+      score,
+      timeLeft
+    }));
   } else {
     // ❌ Incorrecto
     incorrectSound.currentTime = 0;
